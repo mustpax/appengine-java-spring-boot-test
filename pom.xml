@@ -7,6 +7,11 @@
   <groupId>net.paksoy</groupId>
   <artifactId>appenginetest</artifactId>
 
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.9.RELEASE</version>
+  </parent>
   <properties>
     <!-- uncomment if you wish to set your project here project- gcloud is used otherwise -->
     <!-- <app.deploy.project>your-app-id</app.deploy.project> -->
@@ -23,12 +28,43 @@
   </prerequisites>
 
   <dependencies>
+    <!-- APPENGINE DEPS -->
+
     <!-- Compile/runtime dependencies -->
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-1.0-sdk</artifactId>
       <version>1.9.59</version>
     </dependency>
+
+
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <!-- Exclude tomcat that's pre-packaged with Spring -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- PROVIDED -->
+
+    <!-- Exclude any jul-to-slf4j -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
@@ -36,19 +72,15 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>jstl</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
 
-    <!-- Test Dependencies -->
+    <!-- TEST -->
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-testing</artifactId>
       <version>1.9.59</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-api-stubs</artifactId>
@@ -60,13 +92,6 @@
       <groupId>com.google.appengine</groupId>
       <artifactId>appengine-tools-sdk</artifactId>
       <version>1.9.59</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.truth</groupId>
-      <artifactId>truth</artifactId>
-      <version>0.33</version>
       <scope>test</scope>
     </dependency>
 
@@ -88,6 +113,18 @@
     <!-- for hot reload of the web application-->
     <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
     <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>appengine-maven-plugin</artifactId>
@@ -154,33 +191,7 @@
 
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.1</version>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.4.1</version>
-        <executions>
-          <execution>
-            <id>enforce-maven</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireMavenVersion>
-                  <version>3.5</version>
-                </requireMavenVersion>
-                <requirePluginVersions>
-                   <message>Best Practice is to always define plugin versions!</message>
-                   <banLatest>true</banLatest>
-                   <banRelease>true</banRelease>
-                   <phases>clean,deploy,verify,appengine:run,appengine:deploy,appengine:update,appengine:devappaserver,site</phases>
-                </requirePluginVersions>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
+        <version>2.8.1</version>
       </plugin>
     </plugins>
   </build>
