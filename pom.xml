@@ -13,8 +13,8 @@
     <version>1.5.9.RELEASE</version>
   </parent>
   <properties>
-    <!-- uncomment if you wish to set your project here project- gcloud is used otherwise -->
-    <!-- <app.deploy.project>your-app-id</app.deploy.project> -->
+    <app.deploy.project>moosepax-1248</app.deploy.project>
+    <app.deploy.promote>false</app.deploy.promote>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -37,6 +37,11 @@
       <version>1.9.59</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-datastore</artifactId>
+      <version>1.14.0</version>
+    </dependency>
 
     <dependency>
       <groupId>jstl</groupId>
