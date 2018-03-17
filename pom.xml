@@ -15,6 +15,7 @@
   <properties>
     <app.deploy.project>moosepax-1248</app.deploy.project>
     <app.deploy.promote>false</app.deploy.promote>
+    <start-class>net.paksoy.app.Application</start-class>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -53,6 +54,17 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
